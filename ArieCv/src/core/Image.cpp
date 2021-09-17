@@ -15,7 +15,7 @@ ahs::Image::Image(int width, int height, int stride, char* data)
 {
 }
 
-ahs::Image::Image(const ahs::Image& copy)
+ahs::Image::Image(const ahs::Image & copy)
     : width_{ copy.width_ }
     , height_{ copy.height_ }
     , stride_{ copy.stride_ }
@@ -24,11 +24,11 @@ ahs::Image::Image(const ahs::Image& copy)
 
     auto cb = copy.stride_ * copy.height_;
     rawData_ = new char[cb];
-    for (int i = 0; i < cb; ++i)
-        rawData_[i] = copy.rawData_[i];
+
+    memcpy_s(rawData_, cb, copy.rawData_, cb);
 }
 
-ahs::Image::Image(ahs::Image&& move) noexcept
+ahs::Image::Image(ahs::Image && move) noexcept
     : rawData_{ move.rawData_ }
     , width_{ move.width_ }
     , height_{ move.height_ }
@@ -44,7 +44,7 @@ ahs::Image::~Image()
     if (rawData_ != nullptr) delete[] rawData_;
 }
 
-ahs::Image& ahs::Image::operator=(const ahs::Image& copy)
+ahs::Image& ahs::Image::operator=(const ahs::Image & copy)
 {
     if (this != &copy)
     {
@@ -58,14 +58,13 @@ ahs::Image& ahs::Image::operator=(const ahs::Image& copy)
 
         auto cb = stride_ * height_;
         rawData_ = new char[cb];
-        for (int i = 0; i < cb; ++i)
-            rawData_[i] = copy.rawData_[i];
+        memcpy_s(rawData_, cb, copy.rawData_, cb);
     }
 
     return *this;
 }
 
-ahs::Image& ahs::Image::operator=(ahs::Image&& move) noexcept
+ahs::Image& ahs::Image::operator=(ahs::Image && move) noexcept
 {
     if (this != &move)
     {
