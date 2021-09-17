@@ -2,6 +2,14 @@
 
 ahs::codec::BitmapInfoHeader::BitmapInfoHeader() = default;
 
+ahs::codec::BitmapInfoHeader::BitmapInfoHeader(int width, int height, short bpp, int imageSize)
+    : width_{ width }
+    , height_{ height }
+    , bpp_{ bpp }
+    , imageSize_{ imageSize }
+{
+}
+
 ahs::codec::BitmapInfoHeader::~BitmapInfoHeader() = default;
 
 int ahs::codec::BitmapInfoHeader::getHeaderSize() const noexcept

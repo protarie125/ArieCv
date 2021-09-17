@@ -2,6 +2,12 @@
 
 ahs::codec::BitmapFileHeader::BitmapFileHeader() = default;
 
+ahs::codec::BitmapFileHeader::BitmapFileHeader(int fileSize, int offset)
+    : fileSize_{ fileSize }
+    , offset_{ offset }
+{
+}
+
 ahs::codec::BitmapFileHeader::~BitmapFileHeader() = default;
 
 std::string ahs::codec::BitmapFileHeader::getMagicNumber() const noexcept

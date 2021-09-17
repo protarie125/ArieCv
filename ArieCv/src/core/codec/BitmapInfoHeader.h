@@ -8,6 +8,8 @@ namespace ahs {
         public:
             BitmapInfoHeader();
 
+            BitmapInfoHeader(int width, int height, short bpp, int imageSize);
+
             ~BitmapInfoHeader();
 
         private:

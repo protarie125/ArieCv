@@ -9,10 +9,14 @@ int main()
     try
     {
         auto a = ahs::Image::fromFile(R"(C:\Temp\test1.bmp)");
-        cout << a.isInitialized() << endl;
-        cout << "W = " << a.getWidth() << endl
-            << "H = " << a.getHeight() << endl
-            << "Stride = " << a.getStride() << endl;
+        if (a.isInitialized())
+        {
+            cout << "W = " << a.getWidth() << endl
+                << "H = " << a.getHeight() << endl
+                << "Stride = " << a.getStride() << endl;
+
+            a.write(R"(C:\Temp\write_test.bmp)");
+        }
     }
     catch (const exception& exc)
     {

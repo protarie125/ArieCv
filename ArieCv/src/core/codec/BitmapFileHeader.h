@@ -9,6 +9,8 @@ namespace ahs {
         public:
             BitmapFileHeader();
 
+            BitmapFileHeader(int fileSize, int offset);
+
             ~BitmapFileHeader();
 
         private:

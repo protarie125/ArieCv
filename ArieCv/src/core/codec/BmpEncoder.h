@@ -2,6 +2,7 @@
 #include "../../framework.h"
 
 #include "IEncoder.h"
+#include "../Image.h"
 
 namespace ahs {
     namespace codec {
@@ -10,7 +11,7 @@ namespace ahs {
         public:
             ~BmpEncoder() override;
 
-            void encode(const char* filename) override;
+            void encode(const ahs::Image& image, const char* filename) override;
         };
     }
 }

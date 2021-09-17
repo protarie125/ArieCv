@@ -44,8 +44,9 @@ ahs::Image ahs::codec::BmpDecoder::decode(const char* filename)
                     << "Num. Colors = " << bih.getNumColors() << std::endl;
 
                 const auto& width = bih.getWidth();
-                auto pad = (4 - (width % 4)) % 4;
-                auto stride = width + pad;
+                auto row = width * bih.getBpp() / 8;
+                auto pad = (4 - (row % 4)) % 4;
+                auto stride = row + pad;
 
                 const auto& height = bih.getHeight();
                 auto cb = stride * height;

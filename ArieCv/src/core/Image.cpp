@@ -96,6 +96,11 @@ const int& ahs::Image::getStride() const noexcept
     return stride_;
 }
 
+const char* ahs::Image::getRawData() const noexcept
+{
+    return rawData_;
+}
+
 bool ahs::Image::isInitialized() const noexcept
 {
     return (rawData_ != nullptr);
@@ -105,7 +110,7 @@ void ahs::Image::write(const char* filename) const
 {
     ahs::codec::BmpEncoder encoder;
 
-    encoder.encode(filename);
+    encoder.encode(*this, filename);
 }
 
 ahs::Image ahs::Image::fromFile(const char* filename)

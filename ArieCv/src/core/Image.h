@@ -35,6 +35,8 @@ namespace ahs {
 
         virtual const int& getStride() const noexcept;
 
+        virtual const char* getRawData() const noexcept;
+
         virtual bool isInitialized() const noexcept;
 
         virtual void write(const char* filename) const;
