@@ -17,7 +17,9 @@ void ahs::codec::BmpEncoder::encode(const ahs::Image & image, const char* filena
         {
             const auto& width = image.getWidth();
             const auto& height = image.getHeight();
-            const auto& stride = image.getStride();
+            auto stride = width * image.countChannels();
+            auto pad = (4 - (stride % 4)) % 4;
+            stride += 4;
 
             auto cb = stride * height;
             auto offset = static_cast<int>(sizeof(ahs::codec::BitmapFileHeader) + sizeof(ahs::codec::BitmapInfoHeader));
@@ -25,10 +27,14 @@ void ahs::codec::BmpEncoder::encode(const ahs::Image & image, const char* filena
             ahs::codec::BitmapFileHeader bfh{ offset + cb, offset };
             ofs.write(std::bit_cast<char*>(&bfh), sizeof(ahs::codec::BitmapFileHeader));
 
-            ahs::codec::BitmapInfoHeader bih{ width, height, 24, cb };
+            auto bpp = static_cast<short>(8 * image.countChannels());
+            ahs::codec::BitmapInfoHeader bih{ width, height, bpp, cb };
             ofs.write(std::bit_cast<char*>(&bih), sizeof(ahs::codec::BitmapInfoHeader));
 
-            ofs.write(image.getRawData(), cb);
+            auto data = image.getInterleavedData();
+            ofs.write(data, cb);
+
+            delete data;
         }
 
         ofs.close();

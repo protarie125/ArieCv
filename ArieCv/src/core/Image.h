@@ -7,8 +7,6 @@ namespace ahs {
     public:
         Image();
 
-        Image(int width, int height, int stride, char* data);
-
         Image(const ahs::Image& copy);
 
         Image(ahs::Image&& move) noexcept;
@@ -16,13 +14,15 @@ namespace ahs {
         virtual ~Image();
 
     private:
-        char* rawData_{ nullptr };
+        void** rawData_{ nullptr };
 
         int width_{ 0 };
 
         int height_{ 0 };
 
-        int stride_{ 0 };
+        int numberOfChannels_{ 0 };
+
+        int bytePerData_{ 0 };
 
     public:
         ahs::Image& operator=(const ahs::Image& copy);
@@ -33,14 +33,16 @@ namespace ahs {
 
         virtual const int& getHeight() const noexcept;
 
-        virtual const int& getStride() const noexcept;
-
-        virtual const char* getRawData() const noexcept;
+        virtual char* getInterleavedData() const noexcept;
 
         virtual bool isInitialized() const noexcept;
+
+        virtual int countChannels() const noexcept;
 
         virtual void write(const char* filename) const;
 
         static ahs::Image fromFile(const char* filename);
+
+        static ahs::Image fromInterleavedBgr8(int width, int height, int stride, const __int8* data);
     };
 }

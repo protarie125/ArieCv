@@ -55,9 +55,7 @@ ahs::Image ahs::codec::BmpDecoder::decode(const char* filename)
                 ifs.seekg(bfh.getOffset(), std::ifstream::beg);
                 ifs.read(data, cb);
 
-                ahs::Image result{ width, height, stride, data };
-
-                return result;
+                return ahs::Image::fromInterleavedBgr8(width, height, stride, data);
             }
             else
             {

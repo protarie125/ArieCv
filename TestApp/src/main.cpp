@@ -13,7 +13,7 @@ int main()
         {
             cout << "W = " << a.getWidth() << endl
                 << "H = " << a.getHeight() << endl
-                << "Stride = " << a.getStride() << endl;
+                << "Stride = " << a.countChannels() << endl;
 
             a.write(R"(C:\Temp\write_test.bmp)");
         }
